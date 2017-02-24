@@ -1,0 +1,29 @@
+k=1;
+a1=0.5475*k; a2=0.39333*k;
+B=1;
+c=1;
+u=@(x,z,t) B*(exp(-a1.*z)-a2/k*exp(-a2.*z))*sin(k*(x-c.*t));
+w=@(x,z,t) B*(a1/k*exp(-a1.*z)-exp(-a2.*z))*cos(k*(x-c.*t));
+
+T=linspace(0,30,100);
+x=linspace(0,10,100);
+x=1;
+z=0;
+i=1;
+clf
+for t=T
+%     plot(x,u(x,z,t),x,w(x,z,t))
+    quiver(x,zeros(1,1),u(x,z,t),w(x,z,t))
+    hold on
+%     plot(u(x,z,t),w(x,z,t))
+%     axis([0,10,-1,1])
+    axis([0,2,-1,1])
+    K(i)=getframe;
+    i=i+1;
+end
+
+%%
+v=VideoWriter('RayWave.mp4');
+open(v);
+writeVideo(v,K)
+close(v)
